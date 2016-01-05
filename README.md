@@ -1,2 +1,14 @@
 # AudioManager
 声音录制与播放
+使用方法:
+AudioManager
+1. ViewController实现AudioManagerDelegate的委托方法
+2. 获取AudioManager的唯一实例shareManager()
+3. 录制声音时，请使用recordWith...等方法绑定需要保存的文件，然后启动录音startRecord();播放声音时，先使用startPlayWithXXX等方法加载资源，然后执行startPlay(),注意:当使用startWithURL播放远程音频文件时，使用startPlayWithURL(url) { startPlay()},避免网络加载延迟导致的播放失败异常
+AudioProgressView 播放进度条
+1. 若再xib中约束AudioProgressView的位置和大小，请配合使用当前目录下的UIPileView,使用方法:在需要放置AudioProgressView的地方放一个UIPileView占位，然后在viewDidLoad或者其他加载的方法里面讲AudioProgressView座位subView添加至UIPileView即可
+2. 实现AudioProgressViewDelegate的委托方法，该方法用来实现进度条手动点击或者拖动控制播放进度，该方法为
+func audioProgressView(progressView: AudioProgressView, progressDidChanged: CGFloat) 注意:该委托方法只在interativeEnabled为true的情况下会调用
+3. 需要根据播放进度的设置进度条显示比例的时候，设置updateProgress属性(范围0.0 ~ 1.0)即可
+4. 如果需要在进度条上添加自定义的进度button，只需要设置customView属性之后，并将touchDown事件和touchDragInside事件的事件参数回传至其superView即可正常使用拖动控制进度条功能，否则该功能会被屏蔽
+
